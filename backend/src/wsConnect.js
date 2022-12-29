@@ -1,12 +1,16 @@
-import { UserModel, MessageModel, ChatBoxModel } from './models/chatbox'
-
+import ChatBoxModel  from './models/chatbox'
+import MessageModel from './models/message'
+import UserModel from './models/user'
+console.log(UserModel, MessageModel, ChatBoxModel, "Modelssssss")
 const chatBoxes = {}
 
 const sendData = (data, ws) => {
-    ws.send(JSON.stringify(data)); }
+    ws.send(JSON.stringify(data)); 
+}
     
 const sendStatus = (payload, ws) => {
-    sendData(["status", payload], ws); }
+    sendData(["status", payload], ws); 
+}
 
 const broadcastMessage = (wss, data, status) => {
     wss.clients.forEach((client) => {
@@ -17,6 +21,7 @@ const broadcastMessage = (wss, data, status) => {
 
 const makeName = (name, to) => { return [name, to].sort().join('_'); };
 
+////////
 const validateChatBox = async (name, participants) => {
     let box = await ChatBoxModel.findOne({ name });
     if (!box){
@@ -26,6 +31,7 @@ const validateChatBox = async (name, participants) => {
 };
 
 const validateUser = async (name) => {
+    console.log(UserModel, "USER MODEL FIND")
     let box = await UserModel.findOne({ name })
     if (!box){
         box = await new UserModel({ name }).save();
@@ -35,6 +41,9 @@ const validateUser = async (name) => {
 
 const freshChatBox = async (chatboxName, me, friend, body) => {
     let mes = []
+
+
+    console.log("FIND MODEL", ChatBoxModel)
     const existing = (await ChatBoxModel.findOne({ name: chatboxName }))
     if(existing){
         mes = existing.messages
@@ -89,6 +98,7 @@ export default {
                                                     sender: name,
                                                     body: body})
                     freshChatBox(chatboxName, name, to, message)
+                    console.log(message, "101")
                     try{
                         await message.save()
                     } catch (e) {

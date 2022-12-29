@@ -25,6 +25,9 @@ if (process.env.NODE_ENV === "production") {
 
 const server = http.createServer(app)
 const wss = new WebSocket.Server({ server })
+
+// ws.readyState === ws.OPEN
+console.log(wss.readyState === wss.OPEN)
 const db = mongoose.connection
 
 db.once('open', () => {

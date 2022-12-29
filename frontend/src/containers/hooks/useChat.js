@@ -38,6 +38,7 @@ const ChatProvider = (props) => {
     const [signedIn, setSignedIn] = useState(false);
 
     const sendData = async (data) => {
+        console.log(client.readyState === client.OPEN)
         client.send(JSON.stringify(data));
     };
 
