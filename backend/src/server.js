@@ -10,8 +10,6 @@ import wsConnect from './wsConnect'
 mongo.connect();
 
 import path from "path";
-
-import express from "express";
 import cors from "cors";
 
 const app = express();
