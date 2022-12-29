@@ -1,6 +1,17 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import { message } from "antd";
-
+// import axios from "axios";
+const API_ROOT =
+  process.env.NODE_ENV === "production"
+    ? "/api"
+    : "http://localhost:4000/api";
+  
+const WS_URL =
+  process.env.NODE_ENV === "production"
+    ? window.location.origin.replace(/^http/, "ws")
+    : "ws://localhost:4000";
+export const ws = new WebSocket(WS_URL);
+// export const api = axios.create({ baseURL: API_ROOT });
 const LOCALSTORAGE_KEY = "save-me";
 const savedMe = localStorage.getItem(LOCALSTORAGE_KEY);
 
@@ -18,7 +29,7 @@ const ChatContext = createContext({
     setActiveKey:()=>{},
 });
 
-const client = new WebSocket ('ws://localhost:4000')
+const client = new WebSocket (WS_URL)
 
 const ChatProvider = (props) => {
     const [messages, setMessages] = useState([]);
