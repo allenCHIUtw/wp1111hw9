@@ -5,6 +5,7 @@ import mongoose from 'mongoose'
 import WebSocket from 'ws'
 import mongo from './mongo'
 import wsConnect from './wsConnect'
+import axios from "axios";
 
 mongo.connect();
 const API_ROOT =
@@ -36,3 +37,4 @@ server.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}!`)
 });
 export const ws = new WebSocket(WS_URL);
+export const api = axios.create({ baseURL: API_ROOT });
