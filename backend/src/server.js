@@ -13,6 +13,7 @@ const API_ROOT =
     ? "/api"
     : "http://localhost:4000/api";
 
+console.log(window)    
 const WS_URL =
   process.env.NODE_ENV === "production"
     ? window.location.origin.replace(/^http/, "ws")
